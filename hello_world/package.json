@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "web3": "0.17.0-alpha",
-    "solc": "^0.4.4"
-  }
-}
