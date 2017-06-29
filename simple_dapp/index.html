@@ -1,0 +1,32 @@
+<h1>To access your special stuff:</h1>
+<button>Sign In</button>
+
+<p>This will ask you to sign a MetaMask message to prove you control this account.</p>
+<p>That message will then be saved as a cookie in your browser.</p>
+
+<p>In this folder, run:</p>
+<p>python -m SimpleHTTPServer 3000</p>
+ <script>
+ var message = "muchsecureverywow";
+var userEthClient;
+
+window.addEventListener("load", function() {
+  userEthClient = window.web3;
+})
+
+document.querySelector("button").addEventListener("click", function(event) {
+  userEthClient.eth.sign(userEthClient.eth.coinbase, window.web3.sha3(message), function(error, data) {
+    var signedAuthMessage = data;
+    document.cookie = "signedAuthMessage=" + signedAuthMessage;
+    // save signed message as a cookie
+  })
+})
+
+  // Require EthUtil NPM Module on server-side
+  var sigDecoded = EthUtil.fromRPCSig(signedAuthMessage);
+  var recoveredPub = EthUtil.ecrecover(window.web3.sha3(message), sigDecoded.v, sigDecoded.r, sigDecoded.s);
+  var recoveredAddress = EthUtil.pubToAddress(recoveredPub).toString("hex");
+
+  // Authentication Logic (user is logged in?)
+  userEthereumClient.eth.coinbase === recoveredAddress;
+ </script>
